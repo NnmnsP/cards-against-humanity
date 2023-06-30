@@ -28,12 +28,12 @@ p {
 
 h2 {
 	margin: 10px;
-	color: #CB4335;
+	color: #ddd;
 }
 
 .blue-question {
 	margin-top: 15px;
-	color: #2E86C1;
+	color: #333;
 }
 
 .heading-no-margin {
@@ -197,9 +197,9 @@ input:not([type=checkbox]):focus {
 	padding: 5pt;
 	border-radius: 6pt;
 	border: none;
-	border-bottom: 3pt #2471A3 solid;
+	border-bottom: 3pt #000 solid;
 	font: 12pt "Helvetica Neue", Helvetica, sans-serif;
-	background: #2E86C1;
+	background: #444;
 	box-shadow: 0 3pt 3pt #000;
 	transition: all 0.2s;
 	color: #fff;
@@ -207,7 +207,7 @@ input:not([type=checkbox]):focus {
 
 .btn:hover {
 	box-shadow: 0 0 0pt #000;
-	border-bottom: 3pt #2471A3 solid;
+	border-bottom: 3pt #333 solid;
   transform: translatey(3pt);
   cursor: pointer;
 }
@@ -221,17 +221,17 @@ input:not([type=checkbox]):focus {
 	padding: 5pt;
 	border-radius: 6pt;
 	border: none;
-	border-bottom: 3pt #A93226 solid;
+	border-bottom: 3pt #fff solid;
 	font: 12pt "Helvetica Neue", Helvetica, sans-serif;
-	background: #CB4335;
+	background: #fff;
 	box-shadow: 0 3pt 3pt #000;
 	transition: all 0.2s;
-	color: #fff;
+	color: #000;
 }
 
 .btn.danger:hover {
 	box-shadow: 0 0 0pt #000;
-	border-bottom: 3pt #A93226 solid;
+	border-bottom: 3pt #fff solid;
   transform: translatey(3pt);
   cursor: pointer;
 }
@@ -270,7 +270,7 @@ input:not([type=checkbox]):focus {
 	height: 170pt;
 	width: 100pt;
 	border-radius: 5pt;
-	background: linear-gradient(-45deg, #A93226, #CB4335);
+	background: #fff;
 	text-align: left;
 	color: #fff;
 	font: 12pt "Helvetica Neue", Helvetica, sans-serif;
@@ -301,11 +301,11 @@ input:not([type=checkbox]):focus {
 }
 
 .card.red {
-	background: linear-gradient(-45deg, #A93226, #CB4335);
+	background: #fff;
 }
 
 .card.blue {
-	background: linear-gradient(-45deg, #2471A3, #2E86C1);
+	background: #000;
 }
 
 .inline-group {
@@ -333,7 +333,7 @@ input:not([type=checkbox]):focus {
 	border-radius: 5pt;
 	margin: 0;
 	margin-left: 5pt;
-	background-color: #8db9d6;
+	background-color: #000;
 	cursor: pointer;
 	box-shadow: none;
 	border: none;
@@ -341,13 +341,13 @@ input:not([type=checkbox]):focus {
 }
 
 .checkboxes > .btn:hover {
-	background-color: #2471A3;
+	background-color: #333;
 	transform: none;
 	color: #fff;
 }
 
 .checkboxes > .btn:active {
-	background-color: #2E86C1;
+	background-color: #444;
 	transform: none;
 	color: #fff;
 }
@@ -361,7 +361,7 @@ input:not([type=checkbox]):focus {
 	padding: 5pt;
 	border-top-left-radius: 5pt;
 	border-top-right-radius: 5pt;
-	background: #2E86C1;
+	background: #444;
 }
 
 .bottom-bar.hidden {
@@ -374,7 +374,7 @@ input:not([type=checkbox]):focus {
 	border: 0;
 	font: 12pt "Helvetica Neue", Helvetica, sans-serif;
 	color: #fff;
-	background: #2471A3;
+	background: #333;
 	cursor: pointer;
 }
 
