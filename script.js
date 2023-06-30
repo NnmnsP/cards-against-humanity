@@ -1,8 +1,8 @@
-const isProduction = location.origin === "https://internetcards.ianmorrill.com"
+const isProduction = location.origin === "https://cards-against-humanity-2.onrender.com"
 
 const $ = q => document.querySelector(q)
 
-let ws = new WebSocket(isProduction ? "wss://internetcards.ianmorrill.com/ws" : "ws://127.0.0.1:8765")
+let ws = new WebSocket(isProduction ? "wss://cards-against-humanity-2.onrender.com/ws" : "ws://127.0.0.1:8765")
 
 function sendObj(obj) {
   ws.send(JSON.stringify(obj))
