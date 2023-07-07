@@ -28,7 +28,7 @@ p {
 
 h2 {
 	margin: 10px;
-	color: #ddd;
+	color: #111;
 }
 
 .blue-question {
@@ -265,16 +265,18 @@ input:not([type=checkbox]):focus {
 }
 
 .card-list > button > div {
-	padding: 5pt;
+	padding: 10pt;
 	margin: 5pt;
 	height: 170pt;
 	width: 100pt;
 	border-radius: 5pt;
 	background: #fff;
 	text-align: left;
-	color: #fff;
+	box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+	color: #000;
 	font: 12pt "Helvetica Neue", Helvetica, sans-serif;
 	transition: all 0.2s;
+	font-weight: bold;
 }
 
 .card-list > button:hover > div {
@@ -290,7 +292,7 @@ input:not([type=checkbox]):focus {
 }
 
 .card {
-	padding: 5pt;
+	padding: 10pt;
 	margin: 5pt;
 	height: 170pt;
 	width: 100pt;
@@ -298,6 +300,7 @@ input:not([type=checkbox]):focus {
 	text-align: left;
 	color: #fff;
 	font: 12pt "Helvetica Neue", Helvetica, sans-serif;
+	font-weight: bold;
 }
 
 .card.red {
