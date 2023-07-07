@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+
 import asyncio
 import websockets
+from websockets.server import serve
 from game_manager import GameManager
 from member import Member
 from utils import send_object, recv_object
@@ -53,42 +56,53 @@ async def handleRoomJoin(ws, initObj, setRoom):
   else:
     await send_object(ws, {"action": "error", "content": "Please make sure to set a name."})
 
-async def serve(ws, path):
-  currentRoom = ""
-
-  def setRoom(joinCode):
-    nonlocal currentRoom
-    currentRoom = joinCode
-
-  try:
+async def handler(ws):
     while True:
-      initObj = await recv_object(ws)
-      if "action" in initObj:
-        if initObj["action"] == "makeRoom":
-          await handleRoomCreation(ws, initObj, setRoom)
-        elif initObj["action"] == "joinRoom":
-          await handleRoomJoin(ws, initObj, setRoom)
+      print("replies")
+      
+      currentRoom = ""
+      def setRoom(joinCode):
+        nonlocal currentRoom
+        currentRoom = joinCode
+
+      try:
+        while True:
+          initObj = await recv_object(ws)
+          if "action" in initObj:
+            if initObj["action"] == "makeRoom":
+              await handleRoomCreation(ws, initObj, setRoom)
+            elif initObj["action"] == "joinRoom":
+              await handleRoomJoin(ws, initObj, setRoom)
+            else:
+              await send_object(ws, {"action": "error", "content": "Invalid action."})
+      except websockets.ConnectionClosed as e:
+        if currentRoom != "":
+          if games[currentRoom].members[0].ws == ws:
+            games[currentRoom].members.pop(0)
+            await games[currentRoom].broadcastToAll({"action": "hostLeft"})
+          else:
+            index = 0
+            for member in games[currentRoom].members:
+              if member.ws == ws:
+                break
+              index += 1
+            await games[currentRoom].broadcastToAll({"action": "memberLeft", "name": games[currentRoom].members.pop(index).name})
         else:
-          await send_object(ws, {"action": "error", "content": "Invalid action."})
-  except websockets.ConnectionClosed as e:
-    if currentRoom != "":
-      if games[currentRoom].members[0].ws == ws:
-        games[currentRoom].members.pop(0)
-        await games[currentRoom].broadcastToAll({"action": "hostLeft"})
-      else:
-        index = 0
-        for member in games[currentRoom].members:
-          if member.ws == ws:
-            break
-          index += 1
-        await games[currentRoom].broadcastToAll({"action": "memberLeft", "name": games[currentRoom].members.pop(index).name})
-    else:
-      print("Whoops")
+          print("Whoops")
         
-  finally:
-    pass
+      finally:
+        pass
 
-start_server = websockets.serve(serve, "127.0.0.1", 8765)
 
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+async def main():
+  try:
+    async with websockets.serve(handler, "", 8765):
+        print("handled")
+        await asyncio.Future()  # run forever
+  except Exception as e:
+    print("error:", e)
+    raise e
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
