@@ -305,10 +305,12 @@ input:not([type=checkbox]):focus {
 
 .card.red {
 	background: #fff;
+	color:#000;
 }
 
 .card.blue {
 	background: #000;
+	color:#fff;
 }
 
 .inline-group {
@@ -340,7 +342,7 @@ input:not([type=checkbox]):focus {
 	cursor: pointer;
 	box-shadow: none;
 	border: none;
-	color: #0f3955;
+	color: #fff;
 }
 
 .checkboxes > .btn:hover {
