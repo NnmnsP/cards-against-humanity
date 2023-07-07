@@ -1,4 +1,6 @@
-const isProduction = location.origin === "https://cards-against-humanity-2.onrender.com"
+const isProduction = location.origin === "https://cards-against-humanity-2.onrender.com" || new URLSearchParams(location.search).get('production') === "true"
+console.log({isProduction})
+
 
 const $ = q => document.querySelector(q)
 

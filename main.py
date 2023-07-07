@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 
 import asyncio
+import mimetypes
 import websockets
 from websockets.server import serve
 from game_manager import GameManager
 from member import Member
 from utils import send_object, recv_object
+import os
+import asyncio
+import websockets
+from http import HTTPStatus
 
 games = dict()
 
@@ -84,8 +89,6 @@ async def handleRoomJoin(ws, initObj, setRoom):
 
 async def handler(ws):
     while True:
-        print("replies")
-
         currentRoom = ""
 
         def setRoom(joinCode):
@@ -122,14 +125,46 @@ async def handler(ws):
                         }
                     )
             else:
-                print("Whoops")
+                pass
 
         finally:
             pass
 
 
+async def process_request(path, request_headers):
+    """Serves a file when doing a GET request with a valid path."""
+
+    if "Upgrade" in request_headers:
+        return  # Probably a WebSocket connection
+
+    if path == '/':
+        path = '/index.html'
+
+    response_headers = [
+        ('Server', 'asyncio websocket server'),
+        ('Connection', 'close'),
+    ]
+
+    # Derive full system path
+    full_path = os.path.realpath(os.path.join("public", path[1:]))
+
+    # Validate the path
+    if not os.path.exists(full_path) or not os.path.isfile(full_path):
+        print("HTTP GET {} 404 NOT FOUND".format(path))
+        return HTTPStatus.NOT_FOUND, [], b'404 NOT FOUND'
+
+    # Guess file content type
+    mime_type = mimetypes.guess_type(full_path, "application/octet-stream")[0]
+    response_headers.append(('Content-Type', mime_type))
+
+    # Read the whole file into memory and send it out
+    body = open(full_path, 'rb').read()
+    response_headers.append(('Content-Length', str(len(body))))
+    # print("HTTP GET {} 200 OK".format(path))
+    return HTTPStatus.OK, response_headers, body
+
 async def main():
-    async with websockets.serve(handler, "", 8765):
+    async with websockets.serve(handler, "", 8765, process_request=process_request):
         await asyncio.Future()  # run forever
 
 
